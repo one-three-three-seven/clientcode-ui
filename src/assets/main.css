@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .link {
+        @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600
+    }
+
+    .red-icon {
+        @apply w-6 h-6 mx-auto text-red-500
+    }
+
+    .green-icon {
+        @apply w-6 h-6 mx-auto text-green-500
+    }
+
+    .orange-icon {
+        @apply w-6 h-6 mx-auto text-orange-500
+    }
+
+    .blue-icon {
+        @apply w-6 h-6 mx-auto text-blue-500
+    }
+}
