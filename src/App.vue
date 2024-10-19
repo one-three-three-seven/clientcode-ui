@@ -6,7 +6,7 @@
     <a href="https://github.com/one-three-three-seven/ClientCode" class="mx-auto" target="_blank">
         <img src="@/assets/github.svg" width="30" height="30" alt="GitHub">
     </a>
-    <div class="flex flex-wrap justify-center w-full h-full p-5">
+    <div class="flex flex-wrap justify-center w-full h-full pt-5">
         <Chart />
     </div>
 </template>
