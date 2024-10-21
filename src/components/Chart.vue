@@ -28,9 +28,9 @@ use([
     LegendComponent
 ])
 
-const xAxisLabels = computed(() => days.value.map(day => day.date))
+const xAxisLabels = computed(() => days.value.map(day => day.date.slice(0, 10)))
 const series = computed(() => {
-    const clients = Object.keys(days.value[0] || {}).filter(key => !['date', 'slot_start', 'slot_end', 'slot_count'].includes(key)) as ClientKeys[]
+    const clients = Object.keys(days.value[0] || {}).filter(key => !['date', 'slot_first', 'slot_last', 'slot_count'].includes(key)) as ClientKeys[]
 
     return clients.map(client => ({
         name: client.toUpperCase(),
