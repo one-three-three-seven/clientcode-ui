@@ -33,7 +33,7 @@ const series = computed(() => {
     const clients = Object.keys(days.value[0] || {}).filter(key => !['date', 'slot_first', 'slot_last', 'slot_count'].includes(key)) as ClientKeys[]
 
     return clients.map(client => ({
-        name: client.toUpperCase(),
+        name: client.replace(/^./, string => string.toUpperCase()),
         data: days.value.map(day => day[client]),
         type: 'line',
         smooth: false
