@@ -60,8 +60,20 @@ const option = ref({
     series,
     tooltip: {
         show: true,
-        trigger: 'item',
-        formatter: (params: { seriesName: string; value: number }) => `${params.seriesName}: ${(params.value * 100).toFixed(2)}%`
+        trigger: 'axis',
+        formatter: (params: Array<{ seriesName: string; value: number; axisValue: string }>) => {
+            const date = params[0].axisValue
+
+            const seriesData = params
+                .filter(param => param.value !== 0)
+                .map(
+                    (param) =>
+                        `${param.seriesName}: ${(param.value * 100).toFixed(2)}%`
+                )
+                .join('<br>')
+
+            return `<b>${date}</b><br>${seriesData}`
+        }
     },
     legend: {
         show: true
