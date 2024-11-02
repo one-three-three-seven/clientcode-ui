@@ -66,6 +66,7 @@ const option = ref({
 
             const seriesData = params
                 .filter(param => param.value !== 0)
+                .sort((a, b) => b.value - a.value)
                 .map(
                     (param) =>
                         `${param.seriesName}: ${(param.value * 100).toFixed(2)}%`
