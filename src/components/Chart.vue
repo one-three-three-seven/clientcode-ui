@@ -77,7 +77,8 @@ const option = ref({
         }
     },
     legend: {
-        show: true
+        show: true,
+        selected: { 'Prysm': false, 'Lighthouse': false, 'Teku': false, 'Nimbus': false, 'Lodestar': false, 'Grandine': false }
     }
 })
 </script>
