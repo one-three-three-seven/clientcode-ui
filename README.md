@@ -1,1 +1,0 @@
-## graffiti.supermajority.info
