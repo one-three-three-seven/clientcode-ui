@@ -35,7 +35,7 @@ const series = computed(() => {
     return clientNames.map(clientName => ({
         name: clientName,
         data: days.value.map(day => {
-            const dayClient = day.clients.find(client => client.client === clientName.toLocaleLowerCase())
+            const dayClient = day.clients.find(client => client.client === clientName)
             return dayClient ? dayClient.count : 0
         }),
         type: 'line',
