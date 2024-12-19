@@ -12,7 +12,6 @@ import { computed, ref } from 'vue'
 
 import { useDayStore } from '@/stores/day'
 import { storeToRefs } from 'pinia'
-import type { ClientKeys } from '@/lib'
 
 const store = useDayStore()
 const { days } = storeToRefs(store)
@@ -28,13 +27,17 @@ use([
     LegendComponent
 ])
 
-const xAxisLabels = computed(() => days.value.map(day => day.date.slice(0, 10)))
-const series = computed(() => {
-    const clients = Object.keys(days.value[0] || {}).filter(key => !['date', 'slot_first', 'slot_last', 'slot_count'].includes(key)) as ClientKeys[]
+const clientNames = ['Prysm', 'Lighthouse', 'Teku', 'Nimbus', 'Lodestar', 'Grandine', 'Geth', 'Nethermind', 'Besu', 'Erigon', 'Reth']
 
-    return clients.map(client => ({
-        name: client.replace(/^./, string => string.toUpperCase()),
-        data: days.value.map(day => day[client]),
+const xAxisLabels = computed(() => days.value.map(day => day.date.slice(0, 10)))
+
+const series = computed(() => {
+    return clientNames.map(clientName => ({
+        name: clientName,
+        data: days.value.map(day => {
+            const dayClient = day.clients.find(client => client.client === clientName.toLocaleLowerCase())
+            return dayClient ? dayClient.count : 0
+        }),
         type: 'line',
         smooth: false
     }))
@@ -50,11 +53,7 @@ const option = ref({
     yAxis: [
         {
             type: 'value',
-            axisLabel: {
-                formatter: (value: number) => {
-                    return (value * 100).toFixed(2) + '%'
-                }
-            }
+            name: 'Blocks per day'
         }
     ],
     series,
@@ -69,7 +68,7 @@ const option = ref({
                 .sort((a, b) => b.value - a.value)
                 .map(
                     (param) =>
-                        `${param.seriesName}: ${(param.value * 100).toFixed(2)}%`
+                        `${param.seriesName}: ${param.value}`
                 )
                 .join('<br>')
 
