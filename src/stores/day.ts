@@ -6,8 +6,7 @@ export const useDayStore = defineStore('day', () => {
     const days: Ref<Day[]> = ref([])
 
     async function fetchDays() {
-        const response = await (await fetch('https://api.supermajority.info')).json()
-        days.value = response
+        days.value = await (await fetch('https://api.supermajority.info')).json()
     }
 
     return { days, fetchDays }

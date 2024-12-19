@@ -7,7 +7,9 @@
         <img src="@/assets/github.svg" width="30" height="30" alt="GitHub">
     </a> -->
     <div class="flex flex-wrap justify-center w-full h-full mt-5">
-        <Chart />
+        <Suspense>
+            <Chart />
+        </Suspense>
     </div>
 </template>
 

@@ -17,7 +17,7 @@ const store = useDayStore()
 const { days } = storeToRefs(store)
 const { fetchDays } = store
 
-fetchDays()
+await fetchDays()
 
 use([
     SVGRenderer,
@@ -27,17 +27,16 @@ use([
     LegendComponent
 ])
 
-const clientNames = ['Prysm', 'Lighthouse', 'Teku', 'Nimbus', 'Lodestar', 'Grandine', 'Geth', 'Nethermind', 'Besu', 'Erigon', 'Reth']
-
 const xAxisLabels = computed(() => days.value.map(day => day.date.slice(0, 10)))
 
 const series = computed(() => {
-    return clientNames.map(clientName => ({
-        name: clientName,
-        data: days.value.map(day => {
-            const dayClient = day.clients.find(client => client.client === clientName)
-            return dayClient ? dayClient.count : 0
-        }),
+    // Extract all unique client names from all days by looking at their keys
+    const allClientNames = [...new Set(days.value.flatMap(day => Object.keys(day.clients)))]
+
+    // For each client, build a data array containing counts for each day
+    return allClientNames.map(name => ({
+        name: name,
+        data: days.value.map(day => day.clients[name] || 0),
         type: 'line',
         smooth: false
     }))
@@ -64,7 +63,6 @@ const option = ref({
             const date = params[0].axisValue
 
             const seriesData = params
-                .filter(param => param.value !== 0)
                 .sort((a, b) => b.value - a.value)
                 .map(
                     (param) =>
