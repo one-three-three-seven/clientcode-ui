@@ -18,6 +18,8 @@ import Chart from '@/components/Chart.vue'
 </script>
 
 <style>
+@reference "@/assets/main.css";
+
 a {
     @apply link
 }
